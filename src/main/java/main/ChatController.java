@@ -78,7 +78,7 @@ public class ChatController {
     }
 
     @GetMapping(path = "/api/messages")
-    public List<MessageResponse> getMessages() {
+    public HashMap<String, List> getMessages() {
         ArrayList<MessageResponse> messagesList =
             new ArrayList<>();
         Iterable<Message> messages = messageRepository.findAll();
@@ -91,7 +91,9 @@ public class ChatController {
             messageItem.setText(message.getText());
             messagesList.add(messageItem);
         }
-        return messagesList;
+        HashMap<String, List> response = new HashMap<>();
+        response.put("messages", messagesList);
+        return response;
     }
 
     private String getSessionId() {
